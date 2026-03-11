@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>scientific 5 Calculator</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:"Comic Sans MS",cursive;
+}
+
+
+body{
+height:100vh;
+display:flex;
+background:radial-gradient(circle at top,#0229c3,rgb(17, 6, 111),aqua);
+justify-content:center;
+align-items:center;
+
+overflow:auto;
+}
+
+
+
+/* CALCULATOR */
+
+.calculator{
+
+width:360px;
+background:#d9e4ec;
+padding:15px;
+border-radius:12px;
+box-shadow:0 0 20px cyan;
+z-index:2;
+
+}
+
+/* DISPLAY */
+
+#display{
+
+width:100%;
+height:60px;
+font-size:30px;
+text-align:right;
+padding:10px;
+border:none;
+border-radius:8px;
+background:#1b6a8f;
+color:white;
+margin-bottom:10px;
+
+}
+
+/* BUTTON GRID */
+
+.buttons{
+
+display:grid;
+grid-template-columns:repeat(5,1fr);
+gap:7px;
+
+}
+
+/* BUTTON STYLE */
+
+button{
+
+height:45px;
+border-radius:8px;
+border:2px solid transparent;
+font-size:18px;
+cursor:pointer;
+background:#c7d6e2;
+transition:.25s;
+
+}
+
+/* BORDER ANIMATION */
+
+button:hover{
+
+transform:scale(1.08);
+border-color:#00ffff;
+box-shadow:0 0 12px cyan;
+
+}
+.logo{
+    height: 80px;
+    width: 80px;
+    position: absolute;
+    top: 20px;
+    left: 20px;
+}
+/* NUMBER STYLE */
+
+.number{
+background:#9fbad0;
+}
+
+/* ACTIVE FUNCTION */
+
+.active{
+background:#ffcc00 !important;
+}
+
+/* EQUAL */
+
+.equal{
+background:#5fc9ff;
+font-weight:bold;
+}
+
+.mode{
+font-size:14px;
+grid-column:span 2;
+}
+
+</style>
+</head>
+
+<body>
+<img class="logo" src="clogo.png" alt="Calculator Logo">
+<div class="calculator">
+
+<input id="display" value="0">
+
+<div class="buttons">
+
+<button onclick="selectTrig('sin',this)">sin</button>
+<button onclick="selectTrig('cos',this)">cos</button>
+<button onclick="selectTrig('tan',this)">tan</button>
+
+<button class="mode">
+<input type="radio" name="mode" checked>Deg
+<input type="radio" name="mode">Rad
+</button>
+
+<button onclick="clearDisplay()">AC</button>
+
+<button onclick="selectTrig('asin',this)">sin⁻¹</button>
+<button onclick="selectTrig('acos',this)">cos⁻¹</button>
+<button onclick="selectTrig('atan',this)">tan⁻¹</button>
+
+<button onclick="insert(Math.PI)">π</button>
+<button onclick="insert(Math.E)">e</button>
+
+<button onclick="square()">x²</button>
+<button onclick="cube()">x³</button>
+<button onclick="power()">xʸ</button>
+
+<button onclick="antilog()">10ˣ</button>
+<button onclick="log()">log</button>
+
+<button onclick="insert('(')">(</button>
+<button onclick="insert(')')">)</button>
+<button onclick="sqrt()">√</button>
+<button onclick="factorial()">n!</button>
+<button onclick="percent()">%</button>
+
+<button class="number" onclick="insert(7)">7</button>
+<button class="number" onclick="insert(8)">8</button>
+<button class="number" onclick="insert(9)">9</button>
+<button onclick="insert('+')">+</button>
+<button onclick="back()">⌫</button>
+
+<button class="number" onclick="insert(4)">4</button>
+<button class="number" onclick="insert(5)">5</button>
+<button class="number" onclick="insert(6)">6</button>
+<button onclick="insert('-')">−</button>
+<button onclick="insert('/')">÷</button>
+
+<button class="number" onclick="insert(1)">1</button>
+<button class="number" onclick="insert(2)">2</button>
+<button class="number" onclick="insert(3)">3</button>
+<button onclick="insert('*')">×</button>
+<button class="equal" onclick="calculate()">=</button>
+
+<button class="number" onclick="insert(0)">0</button>
+<button onclick="insert('.')">.</button>
+
+</div>
+</div>
+
+<script>
+
+let display=document.getElementById("display")
+let trigFunction=null
+
+function insert(val){
+
+if(display.value=="0") display.value=val
+else display.value+=val
+
+}
+
+function clearDisplay(){
+display.value="0"
+trigFunction=null
+removeActive()
+}
+
+function back(){
+display.value=display.value.slice(0,-1)
+}
+
+function removeActive(){
+document.querySelectorAll("button").forEach(b=>b.classList.remove("active"))
+}
+
+/* TRIG BUTTON SELECT */
+
+function selectTrig(fn,btn){
+
+removeActive()
+
+btn.classList.add("active")
+
+trigFunction=fn
+
+display.value=""
+
+}
+
+/* CALCULATE */
+
+function calculate(){
+
+try{
+
+let value=parseFloat(display.value)
+
+let rad=value*Math.PI/180
+
+let result
+
+if(trigFunction){
+
+if(trigFunction=="sin") result=Math.sin(rad)
+if(trigFunction=="cos") result=Math.cos(rad)
+if(trigFunction=="tan") result=Math.tan(rad)
+
+if(trigFunction=="asin") result=Math.asin(value)*180/Math.PI
+if(trigFunction=="acos") result=Math.acos(value)*180/Math.PI
+if(trigFunction=="atan") result=Math.atan(value)*180/Math.PI
+
+display.value=result
+
+trigFunction=null
+removeActive()
+
+return
+
+}
+
+let exp=display.value
+.replace(/×/g,"*")
+.replace(/÷/g,"/")
+
+display.value=eval(exp)
+
+}catch{
+
+display.value="Error"
+
+}
+
+}
+
+/* FUNCTIONS */
+
+function square(){
+display.value=Math.pow(display.value,2)
+}
+
+function cube(){
+display.value=Math.pow(display.value,3)
+}
+
+function power(){
+let p=prompt("Enter power")
+display.value=Math.pow(display.value,p)
+}
+
+function sqrt(){
+display.value=Math.sqrt(display.value)
+}
+
+function log(){
+display.value=Math.log10(display.value)
+}
+
+function antilog(){
+display.value=Math.pow(10,display.value)
+}
+
+function factorial(){
+
+let n=parseInt(display.value)
+let f=1
+
+for(let i=1;i<=n;i++) f*=i
+
+display.value=f
+
+}
+
+function percent(){
+display.value=display.value/100
+}
+
+/* KEYBOARD SUPPORT */
+
+document.addEventListener("keydown",function(e){
+
+let k=e.key
+
+if(!isNaN(k)) insert(k)
+
+if(k=="+") insert("+")
+if(k=="-") insert("-")
+if(k=="*") insert("*")
+if(k=="/") insert("/")
+if(k==".") insert(".")
+
+if(k=="Enter") calculate()
+
+if(k=="Backspace") back()
+
+if(k=="c") clearDisplay()
+
+})
+
+</script>
+
+</body>
+</html>   

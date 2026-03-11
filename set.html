@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Set Calculator | Majic of Science</title>
+<style>
+body{
+margin:0;
+padding:0;
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+font-family:'Comic Sans MS', cursive;
+background:linear-gradient(135deg,#fbc2eb,#a6c1ee);
+}
+
+.calculator{
+background:white;
+padding:25px;
+border-radius:20px;
+width:360px;
+box-shadow:0 10px 25px rgba(0,0,0,0.2);
+text-align:center;
+}
+
+h2{
+color:#6c5ce7;
+}
+
+input, select{
+width:90%;
+padding:10px;
+margin:8px 0;
+font-size:16px;
+border-radius:10px;
+border:2px solid #6c5ce7;
+text-align:center;
+}
+
+button{
+padding:12px;
+margin-top:10px;
+border:none;
+border-radius:12px;
+font-size:16px;
+background:#74b9ff;
+color:white;
+cursor:pointer;
+transition:0.3s;
+}
+
+button:hover{
+background:#0984e3;
+transform:scale(1.1);
+}
+
+.result{
+margin-top:15px;
+font-size:18px;
+font-weight:bold;
+color:#2d3436;
+}
+</style>
+</head>
+<body>
+
+<div class="calculator">
+<h2>🔢 Set Calculator</h2>
+
+<input id="setA" placeholder="Enter Set A (comma separated)">
+<input id="setB" placeholder="Enter Set B (comma separated)">
+
+<select id="operation">
+<option value="union">Union (A ∪ B)</option>
+<option value="intersection">Intersection (A ∩ B)</option>
+<option value="complementA">Complement (A')</option>
+<option value="complementB">Complement (B')</option>
+</select>
+
+<button onclick="calculate()">Calculate</button>
+
+<div class="result" id="result">Result:</div>
+
+</div>
+
+<script>
+function parseSet(str){
+return str.split(",").map(s=>s.trim()).filter(s=>s!=="");
+}
+
+function complement(set, universal){
+return universal.filter(x=>!set.includes(x));
+}
+
+function calculate(){
+let A = parseSet(document.getElementById("setA").value);
+let B = parseSet(document.getElementById("setB").value);
+
+// Universal set is union of both for simplicity
+let U = Array.from(new Set([...A,...B]));
+
+let op = document.getElementById("operation").value;
+let res=[];
+
+switch(op){
+case "union":
+res = Array.from(new Set([...A,...B]));
+break;
+case "intersection":
+res = A.filter(x=>B.includes(x));
+break;
+case "complementA":
+res = complement(A,U);
+break;
+case "complementB":
+res = complement(B,U);
+break;
+default:
+res=[];
+}
+
+document.getElementById("result").innerHTML="Result: { "+res.join(", ")+" }";
+}
+</script>
+
+</body>
+</html>

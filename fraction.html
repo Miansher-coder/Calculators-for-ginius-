@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Fraction Calculator</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Segoe UI, sans-serif;
+}
+
+body{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:#000;
+    overflow:auto;
+    color:white;
+}
+
+/* ================= GALAXY BG ================= */
+canvas{
+    position:fixed;
+    top:0;
+    left:0;
+    z-index:-1;
+}
+
+/* ================= CONTAINER ================= */
+.container{
+    width:750px;
+    padding:30px;
+    border-radius:15px;
+    background:rgba(255,255,255,0.07);
+    backdrop-filter:blur(15px);
+    border:1px solid rgba(255,255,255,0.2);
+}
+
+h1{
+    color:#4fc3ff;
+    margin-bottom:15px;
+}
+
+/* ================= FRACTION STYLE ================= */
+.fraction{
+    display:inline-block;
+    text-align:center;
+    margin:0 10px;
+}
+
+.fraction input{
+    width:70px;
+    padding:6px;
+    font-size:18px;
+    text-align:center;
+    background:transparent;
+    border:none;
+    color:white;
+    outline:none;
+}
+
+.line{
+    border-top:2px solid white;
+    margin:2px 0;
+}
+
+select{
+    padding:6px;
+    font-size:16px;
+    border-radius:5px;
+}
+
+/* ================= BUTTON ================= */
+.btn{
+    margin-top:20px;
+    padding:10px 25px;
+    font-size:16px;
+    border:none;
+    color:white;
+    cursor:pointer;
+    position:relative;
+    background:#111;
+    border-radius:30px;
+    overflow:hidden;
+}
+
+/* Animated Border */
+.btn::before{
+    content:"";
+    position:absolute;
+    inset:-2px;
+    border-radius:30px;
+    background:linear-gradient(90deg,cyan,magenta,cyan);
+    background-size:300%;
+    z-index:-1;
+    animation:moveBorder 4s linear infinite;
+}
+
+@keyframes moveBorder{
+    0%{background-position:0%;}
+    100%{background-position:300%;}
+}
+
+.btn:hover{
+    transform:scale(1.05);
+    box-shadow:0 0 20px cyan;
+}
+
+/* ================= RESULT ================= */
+.result{
+    display:inline-block;
+    margin-left:15px;
+    font-weight:bold;
+}
+
+/* ================= MIXED OPTION ================= */
+.toggle{
+    margin-top:15px;
+}
+
+/* ================= EXPLANATION ================= */
+.explanation{
+    margin-top:25px;
+    padding:15px;
+    border-radius:10px;
+    background:rgba(255,255,255,0.05);
+    border:1px solid rgba(255,255,255,0.2);
+    font-size:14px;
+    line-height:1.6;
+    color:#ddd;
+}
+
+.explanation b{
+    color:#4fc3ff;
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="bg"></canvas>
+
+<div class="container">
+
+<h1>Fraction Calculator</h1>
+
+<div>
+
+<div class="fraction">
+<input type="number" id="n1">
+<div class="line"></div>
+<input type="number" id="d1">
+</div>
+
+<select id="op">
+<option value="+">+</option>
+<option value="-">−</option>
+<option value="*">×</option>
+<option value="/">÷</option>
+</select>
+
+<div class="fraction">
+<input type="number" id="n2">
+<div class="line"></div>
+<input type="number" id="d2">
+</div>
+
+=
+
+<div class="fraction result">
+<div id="rn">?</div>
+<div class="line"></div>
+<div id="rd">?</div>
+</div>
+
+</div>
+
+<button class="btn" onclick="calculate()">Calculate</button>
+
+<div class="toggle">
+<input type="checkbox" id="mixed">
+<label for="mixed"> Show as Mixed Fraction</label>
+</div>
+
+<!-- ================= EXPLANATION SECTION ================= -->
+
+<div class="explanation">
+
+<b>How This Calculator Works:</b><br><br>
+
+🔹 <b>Numerator</b> → The number above the line (top part of fraction).<br>
+🔹 <b>Denominator</b> → The number below the line (bottom part of fraction).<br><br>
+
+Example:<br>
+If you enter <b>2 / 3</b><br>
+The <b>2</b> is the numerator and <b>3</b> is the denominator.<br><br>
+
+<b>Operations:</b><br>
+➕ Addition → Cross multiply and add.<br>
+➖ Subtraction → Cross multiply and subtract.<br>
+✖ Multiplication → Multiply top × top and bottom × bottom.<br>
+➗ Division → Multiply by reciprocal (flip second fraction).<br><br>
+
+<b>Mixed Fraction Option:</b><br>
+If result is improper (like 7/3), enabling this will display it as:<br>
+<b>2 1/3</b>
+
+</div>
+
+</div>
+
+<script>
+
+/* =============== FRACTION LOGIC =============== */
+function gcd(a,b){
+return b ? gcd(b,a%b) : a;
+}
+
+function calculate(){
+
+let n1=+document.getElementById("n1").value;
+let d1=+document.getElementById("d1").value;
+let n2=+document.getElementById("n2").value;
+let d2=+document.getElementById("d2").value;
+let op=document.getElementById("op").value;
+
+if(!n1||!d1||!n2||!d2){
+alert("Enter all values");
+return;
+}
+
+let num,den;
+
+if(op==="+"){ num=n1*d2+n2*d1; den=d1*d2; }
+if(op==="-"){ num=n1*d2-n2*d1; den=d1*d2; }
+if(op==="*"){ num=n1*n2; den=d1*d2; }
+if(op==="/"){ num=n1*d2; den=d1*n2; }
+
+/* Simplify */
+let g=gcd(Math.abs(num),Math.abs(den));
+num/=g;
+den/=g;
+
+if(document.getElementById("mixed").checked && Math.abs(num)>Math.abs(den)){
+let whole=parseInt(num/den);
+let remainder=Math.abs(num%den);
+document.getElementById("rn").innerText=whole+" "+remainder;
+document.getElementById("rd").innerText=den;
+}
+else{
+document.getElementById("rn").innerText=num;
+document.getElementById("rd").innerText=den;
+}
+
+}
+
+/* =============== GALAXY BG =============== */
+const canvas=document.getElementById("bg");
+const ctx=canvas.getContext("2d");
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+
+let stars=[];
+for(let i=0;i<250;i++){
+stars.push({
+x:Math.random()*canvas.width,
+y:Math.random()*canvas.height,
+r:Math.random()*2,
+d:Math.random()*1
+});
+}
+
+function draw(){
+let gradient=ctx.createRadialGradient(
+canvas.width/2,canvas.height/2,100,
+canvas.width/2,canvas.height/2,canvas.width
+);
+gradient.addColorStop(0,"#1a0033");
+gradient.addColorStop(1,"#000");
+
+ctx.fillStyle=gradient;
+ctx.fillRect(0,0,canvas.width,canvas.height);
+
+ctx.fillStyle="white";
+stars.forEach(s=>{
+ctx.beginPath();
+ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+ctx.fill();
+s.y+=s.d;
+if(s.y>canvas.height){
+s.y=0;
+s.x=Math.random()*canvas.width;
+}
+});
+
+requestAnimationFrame(draw);
+}
+
+draw();
+
+</script>
+
+</body>
+</html>

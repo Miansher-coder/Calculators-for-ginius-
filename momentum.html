@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Momentum Calculator | Physics</title>
+<style>
+    body {
+        margin:0;
+        font-family: 'Comic Sans MS', cursive;
+        background: linear-gradient(to right, #ffafbd, #ffc3a0);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    .calculator {
+        background: #fff;
+        padding: 30px 40px;
+        border-radius: 20px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        text-align: center;
+        width: 350px;
+    }
+
+    .calculator h1 {
+        margin-bottom: 20px;
+        color: #ff5f6d;
+    }
+
+    input, button {
+        width: 80%;
+        padding: 10px;
+        margin: 10px 0;
+        border-radius: 10px;
+        border: 1px solid #ccc;
+        font-size: 16px;
+    }
+
+    button {
+        background: #ff5f6d;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    button:hover {
+        background: #ffc371;
+    }
+
+    .result {
+        margin-top: 20px;
+        font-size: 20px;
+        font-weight: bold;
+        color: #ff5f6d;
+    }
+</style>
+</head>
+<body>
+
+<div class="calculator">
+    <h1>Momentum Calculator</h1>
+    <input type="number" id="mass" placeholder="Mass (kg)">
+    <input type="number" id="velocity" placeholder="Velocity (m/s)">
+    <button onclick="calculateMomentum()">Calculate Momentum</button>
+    <div class="result" id="result"></div>
+</div>
+
+<script>
+    function calculateMomentum() {
+        let mass = parseFloat(document.getElementById('mass').value);
+        let velocity = parseFloat(document.getElementById('velocity').value);
+
+        if (isNaN(mass) || isNaN(velocity)) {
+            document.getElementById('result').innerHTML = "Please enter both Mass and Velocity!";
+            return;
+        }
+
+        let momentum = mass * velocity;
+
+        document.getElementById('result').innerHTML = `Momentum: ${momentum.toFixed(2)} kg·m/s`;
+    }
+</script>
+
+</body>
+</html>

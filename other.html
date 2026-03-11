@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Other Calculators | Majic of Science</title>
+
+<style>
+
+/* ===== BODY ===== */
+body{
+  margin:0;
+  font-family:Poppins;
+  background:black;
+  color:white;
+  overflow-x:hidden;
+}
+
+/* ===== ANIMATED BACKGROUND ===== */
+body::before{
+  content:"";
+  position:fixed;
+  width:200%;
+  height:200%;
+  background:
+    radial-gradient(white 1px, transparent 1px),
+    radial-gradient(cyan 1px, transparent 1px),
+    radial-gradient(purple 1px, transparent 1px);
+  background-size:80px 80px,140px 140px,200px 200px;
+  animation:stars 60s linear infinite;
+  z-index:-1;
+}
+
+@keyframes stars{
+  from{transform:translateY(0);}
+  to{transform:translateY(-2000px);}
+}
+
+/* ===== TITLE ===== */
+h1{
+  text-align:center;
+  margin-top:40px;
+  font-size:36px;
+  text-shadow:0 0 15px cyan;
+}
+
+/* ===== GRID ===== */
+.container{
+  width:90%;
+  margin:auto;
+  margin-top:50px;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:30px;
+}
+
+/* ===== CALCULATOR BOX ===== */
+.calc{
+  background:#070720;
+  height:180px;
+  border-radius:12px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  transition:0.4s;
+  position:relative;
+}
+
+/* neon animated border */
+.calc::before{
+  content:"";
+  position:absolute;
+  inset:-3px;
+  border-radius:14px;
+  background:linear-gradient(45deg, cyan, blue, purple, magenta, cyan);
+  background-size:400%;
+  animation:borderMove 6s linear infinite;
+  z-index:-1;
+}
+
+@keyframes borderMove{
+  0%{background-position:0%;}
+  100%{background-position:400%;}
+}
+
+/* image */
+.calc img{
+  width:70px;
+  margin-bottom:12px;
+}
+
+/* text */
+.calc span{
+  font-size:16px;
+  color:aqua;
+  text-shadow:0 0 5px rgb(234, 236, 236), 0 0 10px rgb(255, 248, 248), 0 0 20px rgb(242, 242, 243);
+}
+
+/* hover */
+.calc:hover{
+  transform:translateY(-8px) scale(1.08);
+  box-shadow:0 0 20px cyan,0 0 40px blue;
+}
+
+/* ================= NAVBAR ================= */
+.navbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:15px 60px;
+  background: radial-gradient(circle at top, #0a0f2c, #030e64, #026785);
+  position:sticky;
+  top:0;
+  z-index:1000;
+}
+
+.logo img{ 
+  width:120px;
+}
+
+.nav-links{
+  list-style:none;
+  display:flex;
+  gap:35px;
+}
+
+.nav-links a{
+  text-decoration:none;
+  color:white;
+  font-weight:500;
+  transition:.3s;
+}
+
+.nav-links a:hover{
+  background:#0c7946;
+  padding:8px 20px;
+  border-radius:20px;
+}
+
+.active{
+  position:relative;
+  display:inline-block;
+  border-radius:40px;
+  padding:3px;
+  background:linear-gradient(45deg, red, orange, yellow, green, cyan, blue, violet, red);
+  background-size:400%;
+  animation:borderMove 6s linear infinite;
+}
+
+.active a{
+  display:inline-block;
+  padding:14px 30px;
+  border-radius:40px;
+  background:#0a0f2c;
+  color:white;
+  font-size:16px;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+.active a:hover{
+  transform:scale(1.1);
+  box-shadow:0 0 20px rgba(255,0,150,0.6);
+}
+
+/* ================= SLIDER ================= */
+.slider{
+  width:1000px;
+  height:350px;
+  margin:35px auto;
+  overflow:hidden;
+  border-radius:12px;
+  border:2px dashed #8bc34a;
+  box-shadow:0 4px 15px rgba(0,0,0,0.2);
+}
+
+.slides{
+  display:flex;
+  width:4000px;
+  animation:slide 12s infinite;
+}
+
+.slides img{
+  width:1000px;
+  height:350px;
+  object-fit:cover;
+}
+
+@keyframes slide{
+  0%,20%{transform:translateX(0);}
+  25%,40%{transform:translateX(-1000px);}
+  50%,60%{transform:translateX(-2000px);}
+  75%,80%{transform:translateX(-3000px);}
+  100%{transform:translateX(0);}
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="logo">
+    <img src="clogo.png" alt="calculator logo">
+  </div>
+  <ul class="nav-links">
+     <a href="homecal.html">Home</a>
+      <a href="math.html">Math</a>
+      <a href="physics.html">Physics</a>
+      
+      <a class="active" href="other.html">Other</a>
+  </ul>
+</nav>
+
+<h1 class="main-title">🛠 Other Calculators</h1>
+
+<!-- SLIDER -->
+<div class="slider">
+  <div class="slides">
+    <img src="ba1.png">
+    <img src="ba2.png">
+    <img src="ba3.png">
+    <img src="ba4.png">
+  </div>
+</div>
+
+<h1>🧰 Other Utility Calculators</h1>
+
+<div class="container">
+<a href="age.html" class="calc">
+<img src="age.png">
+<span>Age Calculator</span>
+</a>
+
+<a href="countdown.html" class="calc">
+<img src="timer.png">
+<span>Stopwatch Calculator</span>
+</a>
+
+
+<a href="percentage.html" class="calc">
+<img src="%.png">
+<span>Percentage Calculator</span>
+</a>
+    
+<a  href="conver.html" class="calc">
+<img src="convert.png">
+<span>Unit Converter</span>
+</a>
+
+</div>
+
+</body>
+</html>

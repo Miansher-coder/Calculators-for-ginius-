@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Power Calculator | Majic of Science</title>
+
+<style>
+
+body{
+margin:0;
+font-family:'Comic Sans MS', cursive;
+background:linear-gradient(135deg,#00c9ff,#92fe9d);
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+}
+
+.box{
+background:white;
+padding:30px;
+border-radius:20px;
+width:360px;
+text-align:center;
+box-shadow:0 10px 25px rgba(0,0,0,0.2);
+}
+
+h2{
+color:#0984e3;
+}
+
+.formula{
+background:#f1f2f6;
+padding:10px;
+border-radius:10px;
+margin-bottom:15px;
+font-weight:bold;
+}
+
+input{
+width:120px;
+padding:10px;
+margin:8px;
+border-radius:10px;
+border:2px solid #0984e3;
+font-size:16px;
+text-align:center;
+}
+
+button{
+padding:10px 15px;
+margin:6px;
+border:none;
+border-radius:12px;
+background:#00b894;
+color:white;
+font-size:16px;
+cursor:pointer;
+transition:0.3s;
+}
+
+button:hover{
+transform:scale(1.1);
+background:#019875;
+}
+
+.result{
+margin-top:15px;
+font-size:22px;
+font-weight:bold;
+color:#2d3436;
+}
+
+.open-btn{
+background:#6c5ce7;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="box">
+
+<h2>⚡ Power Calculator</h2>
+
+<div class="formula">
+Formula: P = W / t
+</div>
+
+<input type="number" id="work" placeholder="Work (J)">
+<br>
+
+<input type="number" id="time" placeholder="Time (s)">
+<br>
+
+<button onclick="calculatePower()">Calculate Power</button>
+
+<div class="result" id="result"></div>
+
+<br>
+
+<button class="open-btn" onclick="window.location.href='work.html'">
+Open Work Calculator
+</button>
+
+<button class="open-btn" onclick="window.location.href='time.html'">
+Open Time Calculator
+</button>
+
+</div>
+
+<script>
+
+function calculatePower(){
+
+let work = Number(document.getElementById("work").value);
+let time = Number(document.getElementById("time").value);
+
+if(time==0){
+document.getElementById("result").innerHTML="Time cannot be 0";
+return;
+}
+
+let power = work / time;
+
+document.getElementById("result").innerHTML =
+"Power = " + power.toFixed(2) + " Watts";
+
+}
+
+</script>
+
+</body>
+</html>

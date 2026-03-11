@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Advanced Age Calculator | Majic of Science</title>
+
+<style>
+
+body{
+margin:0;
+padding:0;
+font-family:'Comic Sans MS', cursive;
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+background:linear-gradient(135deg,#89f7fe,#66a6ff);
+}
+
+/* Calculator Box */
+
+.calculator{
+background:white;
+padding:25px;
+border-radius:20px;
+width:360px;
+text-align:center;
+box-shadow:0 10px 25px rgba(0,0,0,0.2);
+}
+
+h2{
+color:#6c5ce7;
+}
+
+input{
+width:90%;
+padding:10px;
+margin:10px 0;
+border-radius:10px;
+border:2px solid #6c5ce7;
+font-size:16px;
+}
+
+button{
+padding:12px 20px;
+border:none;
+border-radius:12px;
+background:#00b894;
+color:white;
+font-size:16px;
+cursor:pointer;
+transition:0.3s;
+}
+
+button:hover{
+background:#019875;
+transform:scale(1.1);
+}
+
+.result{
+margin-top:15px;
+font-size:18px;
+font-weight:bold;
+color:#2d3436;
+line-height:1.6;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="calculator">
+
+<h2>🍰
+     Age / Time Calculator</h2>
+
+<label>From Date & Time</label>
+<input type="datetime-local" id="fromDate">
+
+<label>To Date & Time</label>
+<input type="datetime-local" id="toDate">
+
+<br>
+
+<button onclick="calculate()">Calculate</button>
+
+<div class="result" id="result">
+Result:
+</div>
+
+</div>
+
+<script>
+
+function calculate(){
+
+let from = new Date(document.getElementById("fromDate").value);
+let to = new Date(document.getElementById("toDate").value);
+
+if(isNaN(from) || isNaN(to)){
+document.getElementById("result").innerHTML="Enter both dates";
+return;
+}
+
+let diff = to - from;
+
+if(diff < 0){
+document.getElementById("result").innerHTML="End date must be after start date";
+return;
+}
+
+let minutes = Math.floor(diff / (1000 * 60));
+let hours = Math.floor(diff / (1000 * 60 * 60));
+let days = Math.floor(diff / (1000 * 60 * 60 * 24));
+
+/* Years Months Days */
+
+let years = to.getFullYear() - from.getFullYear();
+let months = to.getMonth() - from.getMonth();
+let d = to.getDate() - from.getDate();
+
+if(d < 0){
+months--;
+d += new Date(to.getFullYear(), to.getMonth(), 0).getDate();
+}
+
+if(months < 0){
+years--;
+months += 12;
+}
+
+document.getElementById("result").innerHTML =
+
+"📅 " + years + " Years " + months + " Months " + d + " Days<br>" +
+"⏱ " + hours + " Total Hours<br>" +
+"🕒 " + minutes + " Total Minutes<br>" +
+"📆 " + days + " Total Days";
+
+}
+
+</script>
+
+</body>
+</html>

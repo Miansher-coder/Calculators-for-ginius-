@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Cartoon Triangle Calculator</title>
+
+<style>
+
+body{
+margin:0;
+font-family:'Comic Sans MS', cursive;
+background:linear-gradient(135deg,#74ebd5,#ACB6E5);
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+}
+
+.container{
+background:white;
+width:520px;
+padding:20px;
+border-radius:25px;
+box-shadow:0 15px 35px rgba(0,0,0,0.3);
+text-align:center;
+}
+
+h2{
+color:#ff6b6b;
+}
+
+svg{
+margin-top:10px;
+}
+
+input{
+width:55px;
+padding:6px;
+border-radius:10px;
+border:2px solid #74b9ff;
+text-align:center;
+font-weight:bold;
+background:#fdfdfd;
+}
+
+select{
+padding:6px;
+border-radius:10px;
+margin-left:10px;
+}
+
+button{
+margin-top:15px;
+padding:10px 25px;
+font-size:16px;
+background:#55efc4;
+border:none;
+border-radius:30px;
+cursor:pointer;
+position:relative;
+}
+
+/* moving border */
+
+button::before{
+content:"";
+position:absolute;
+inset:0;
+padding:3px;
+border-radius:30px;
+background:linear-gradient(90deg,#ff6b6b,#feca57,#1dd1a1,#54a0ff);
+background-size:300%;
+-webkit-mask:
+linear-gradient(#fff 0 0) content-box,
+linear-gradient(#fff 0 0);
+-webkit-mask-composite:xor;
+mask-composite:exclude;
+opacity:0;
+}
+
+button:hover::before{
+opacity:1;
+animation:move 2s linear infinite;
+}
+
+@keyframes move{
+0%{background-position:0%}
+100%{background-position:300%}
+}
+
+.result{
+margin-top:15px;
+background:#f1f2f6;
+padding:12px;
+border-radius:15px;
+font-weight:bold;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>📐 Triangle Calculator</h2>
+
+<svg width="320" height="230">
+
+<!-- triangle -->
+<polygon points="160,30 50,200 270,200"
+fill="#ffeaa7"
+stroke="#ff7675"
+stroke-width="4"/>
+
+<!-- sides -->
+<foreignObject x="15" y="110" width="60" height="40">
+<input id="c" placeholder="c">
+</foreignObject>
+
+<foreignObject x="110" y="205" width="60" height="40">
+<input id="a" placeholder="a">
+</foreignObject>
+
+<foreignObject x="250" y="110" width="60" height="40">
+<input id="b" placeholder="b">
+</foreignObject>
+
+<!-- angles -->
+<foreignObject x="145" y="0" width="60" height="40">
+<input id="C" placeholder="∠C">
+</foreignObject>
+
+<foreignObject x="25" y="175" width="60" height="40">
+<input id="A" placeholder="∠A">
+</foreignObject>
+
+<foreignObject x="235" y="175" width="60" height="40">
+<input id="B" placeholder="∠B">
+</foreignObject>
+
+</svg>
+
+<div>
+
+Angle Unit
+
+<select id="unit">
+<option value="deg">Degree</option>
+<option value="rad">Radian</option>
+</select>
+
+</div>
+
+<br>
+
+<button onclick="calculate()">Calculate</button>
+<button onclick="clearAll()">Clear</button>
+
+<div class="result" id="output"></div>
+
+</div>
+
+<script>
+
+function toRad(val,unit){
+return unit==="deg"?val*Math.PI/180:val
+}
+
+function toDeg(val,unit){
+return unit==="deg"?val:val*180/Math.PI
+}
+
+function calculate(){
+
+let a=parseFloat(a_input.value)
+let b=parseFloat(b_input.value)
+let c=parseFloat(c_input.value)
+let A=parseFloat(A_input.value)
+let B=parseFloat(B_input.value)
+let C=parseFloat(C_input.value)
+
+let unit=document.getElementById("unit").value
+
+// convert angles to radians
+let Ar=toRad(A,unit)
+let Br=toRad(B,unit)
+let Cr=toRad(C,unit)
+
+try{
+
+// SSS
+if(a && b && c){
+
+Ar=Math.acos((b*b+c*c-a*a)/(2*b*c))
+Br=Math.acos((a*a+c*c-b*b)/(2*a*c))
+Cr=Math.PI-Ar-Br
+
+}
+
+// SAS
+else if(a && b && C){
+
+Cr=toRad(C,unit)
+c=Math.sqrt(a*a+b*b-2*a*b*Math.cos(Cr))
+Ar=Math.asin(a*Math.sin(Cr)/c)
+Br=Math.PI-Ar-Cr
+
+}
+
+// ASA
+else if(A && B && c){
+
+Ar=toRad(A,unit)
+Br=toRad(B,unit)
+Cr=Math.PI-Ar-Br
+
+a=c*Math.sin(Ar)/Math.sin(Cr)
+b=c*Math.sin(Br)/Math.sin(Cr)
+
+}
+
+// AAS
+else if(A && C && a){
+
+Ar=toRad(A,unit)
+Cr=toRad(C,unit)
+Br=Math.PI-Ar-Cr
+
+b=a*Math.sin(Br)/Math.sin(Ar)
+c=a*Math.sin(Cr)/Math.sin(Ar)
+
+}
+
+else{
+
+output.innerHTML="⚠ Enter at least 2 sides and 1 angle or 3 sides"
+return
+
+}
+
+// convert back
+A=toDeg(Ar,unit)
+B=toDeg(Br,unit)
+C=toDeg(Cr,unit)
+
+// display
+
+a_input.value=a.toFixed(2)
+b_input.value=b.toFixed(2)
+c_input.value=c.toFixed(2)
+
+A_input.value=A.toFixed(2)
+B_input.value=B.toFixed(2)
+C_input.value=C.toFixed(2)
+
+output.innerHTML="✅ Triangle Solved Successfully"
+
+}
+
+catch{
+output.innerHTML="❌ Invalid Triangle Values"
+}
+
+}
+
+// clear
+
+function clearAll(){
+
+document.querySelectorAll("input").forEach(i=>i.value="")
+output.innerHTML=""
+
+}
+
+// inputs
+
+let a_input=document.getElementById("a")
+let b_input=document.getElementById("b")
+let c_input=document.getElementById("c")
+
+let A_input=document.getElementById("A")
+let B_input=document.getElementById("B")
+let C_input=document.getElementById("C")
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Work Calculator | Physics</title>
+<style>
+    body {
+        margin:0;
+        font-family: 'Comic Sans MS', cursive;
+        background: linear-gradient(to right, #00c6ff, #0072ff);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    .calculator {
+        background: #fff;
+        padding: 30px 40px;
+        border-radius: 20px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        text-align: center;
+        width: 350px;
+    }
+
+    .calculator h1 {
+        margin-bottom: 20px;
+        color: #0072ff;
+    }
+
+    input, button {
+        width: 80%;
+        padding: 10px;
+        margin: 10px 0;
+        border-radius: 10px;
+        border: 1px solid #ccc;
+        font-size: 16px;
+    }
+
+    button {
+        background: #0072ff;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    button:hover {
+        background: #00c6ff;
+    }
+
+    .result {
+        margin-top: 20px;
+        font-size: 20px;
+        font-weight: bold;
+        color: #0072ff;
+    }
+</style>
+</head>
+<body>
+
+<div class="calculator">
+    <h1>Work Calculator</h1>
+    <input type="number" id="force" placeholder="Force (N)">
+    <input type="number" id="distance" placeholder="Distance (m)">
+    <input type="number" id="angle" placeholder="Angle (θ in degrees)">
+    <button onclick="calculateWork()">Calculate Work</button>
+    <div class="result" id="result"></div>
+</div>
+
+<script>
+    function calculateWork() {
+        let force = parseFloat(document.getElementById('force').value);
+        let distance = parseFloat(document.getElementById('distance').value);
+        let angle = parseFloat(document.getElementById('angle').value);
+
+        if (isNaN(force) || isNaN(distance) || isNaN(angle)) {
+            document.getElementById('result').innerHTML = "Please enter all values!";
+            return;
+        }
+
+        // Convert angle to radians
+        let angleRad = angle * (Math.PI / 180);
+
+        // Work formula: W = F * d * cos(θ)
+        let work = force * distance * Math.cos(angleRad);
+
+        document.getElementById('result').innerHTML = `Work Done: ${work.toFixed(2)} Joules`;
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Potential Energy Calculator | Physics</title>
+<style>
+    body {
+        margin:0;
+        font-family: 'Comic Sans MS', cursive;
+        background: linear-gradient(to right, #fbc2eb, #a6c1ee);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    .calculator {
+        background: #fff;
+        padding: 30px 40px;
+        border-radius: 20px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        text-align: center;
+        width: 350px;
+    }
+
+    .calculator h1 {
+        margin-bottom: 20px;
+        color: #ff69b4;
+    }
+
+    input, button {
+        width: 80%;
+        padding: 10px;
+        margin: 10px 0;
+        border-radius: 10px;
+        border: 1px solid #ccc;
+        font-size: 16px;
+    }
+
+    button {
+        background: #ff69b4;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    button:hover {
+        background: #ffb6c1;
+    }
+
+    .result {
+        margin-top: 20px;
+        font-size: 20px;
+        font-weight: bold;
+        color: #ff69b4;
+    }
+</style>
+</head>
+<body>
+
+<div class="calculator">
+    <h1>Potential Energy Calculator</h1>
+    <input type="number" id="mass" placeholder="Mass (kg)">
+    <input type="number" id="height" placeholder="Height (m)">
+    <input type="number" id="gravity" placeholder="Gravity (m/s²)" value="9.8">
+    <button onclick="calculatePE()">Calculate PE</button>
+    <div class="result" id="result"></div>
+</div>
+
+<script>
+    function calculatePE() {
+        let mass = parseFloat(document.getElementById('mass').value);
+        let height = parseFloat(document.getElementById('height').value);
+        let gravity = parseFloat(document.getElementById('gravity').value);
+
+        if (isNaN(mass) || isNaN(height) || isNaN(gravity)) {
+            document.getElementById('result').innerHTML = "Please enter all values!";
+            return;
+        }
+
+        let PE = mass * gravity * height;
+
+        document.getElementById('result').innerHTML = `Potential Energy: ${PE.toFixed(2)} Joules`;
+    }
+</script>
+
+</body>
+</html>

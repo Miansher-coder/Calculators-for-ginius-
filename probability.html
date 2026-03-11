@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Probability Calculator | Majic of Science</title>
+
+<style>
+body{
+margin:0;
+padding:0;
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+font-family:'Comic Sans MS', cursive;
+background:linear-gradient(135deg,#fbc2eb,#a6c1ee);
+}
+
+.calculator{
+background:white;
+padding:25px;
+border-radius:20px;
+width:360px;
+box-shadow:0 10px 25px rgba(0,0,0,0.2);
+text-align:center;
+}
+
+h2{
+color:#6c5ce7;
+}
+
+input, select{
+width:90%;
+padding:10px;
+margin:10px 0;
+font-size:16px;
+border-radius:10px;
+border:2px solid #6c5ce7;
+text-align:center;
+}
+
+button{
+padding:12px;
+margin-top:10px;
+border:none;
+border-radius:12px;
+font-size:16px;
+background:#74b9ff;
+color:white;
+cursor:pointer;
+transition:0.3s;
+}
+
+button:hover{
+background:#0984e3;
+transform:scale(1.1);
+}
+
+.result{
+margin-top:15px;
+font-size:18px;
+font-weight:bold;
+color:#2d3436;
+}
+</style>
+</head>
+<body>
+
+<div class="calculator">
+<h2>🎲 Probability Calculator</h2>
+
+<input type="number" id="favorable" placeholder="Favorable Outcomes">
+<input type="number" id="total" placeholder="Total Outcomes">
+
+<select id="type">
+<option value="probability">Probability P(A)</option>
+<option value="percentage">Probability %</option>
+</select>
+
+<button onclick="calculate()">Calculate</button>
+
+<div class="result" id="result">Result: </div>
+
+</div>
+
+<script>
+function calculate(){
+let favorable = Number(document.getElementById("favorable").value);
+let total = Number(document.getElementById("total").value);
+let type = document.getElementById("type").value;
+
+if(total===0 || favorable<0 || favorable>total){
+document.getElementById("result").innerHTML = "Invalid Input";
+return;
+}
+
+let probability = favorable/total;
+
+if(type==="probability"){
+document.getElementById("result").innerHTML = "P(A) = "+probability.toFixed(3);
+} else if(type==="percentage"){
+document.getElementById("result").innerHTML = "P(A) = "+(probability*100).toFixed(2)+"%";
+}
+}
+</script>
+
+</body>
+</html>\

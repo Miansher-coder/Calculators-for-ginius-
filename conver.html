@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Universal Cartoon Unit Converter</title>
+<style>
+/* ===== Body & Background ===== */
+body {
+  margin:0;
+  font-family:'Comic Sans MS', cursive;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  min-height:100vh;
+  background: linear-gradient(120deg,#74ebd5,#ACB6E5);
+  overflow:auto;
+}
+
+/* Floating circles background */
+body::before, body::after {
+  content:'';
+  position:absolute;
+  border-radius:50%;
+  background:rgba(255,255,255,0.2);
+  animation: float 10s infinite alternate;
+}
+body::before { width:300px; height:300px; top:-100px; left:-100px;}
+body::after { width:200px; height:200px; bottom:-50px; right:-50px;}
+@keyframes float {0%{transform:translateY(0) translateX(0);}50%{transform:translateY(-50px) translateX(50px);}100%{transform:translateY(0) translateX(0);}}
+
+/* ===== Converter Device ===== */
+.converter{
+  position:relative;
+  width:450px;
+  background:#fff8dc;
+  border-radius:30px;
+  padding:25px;
+  box-shadow:0 15px 30px rgba(0,0,0,0.3);
+  border:6px solid #2b6cb0;
+  z-index:1;
+}
+
+/* Title */
+.title{
+  background:#2b6cb0;
+  color:#fff;
+  text-align:center;
+  padding:12px;
+  border-radius:20px;
+  font-size:28px;
+  font-weight:bold;
+  margin-bottom:20px;
+  text-shadow:1px 1px #0003;
+}
+
+/* Dropdowns */
+select, input{
+  width:100%;
+  padding:10px;
+  margin-bottom:15px;
+  border-radius:15px;
+  border:none;
+  font-size:16px;
+  background:#fff5e6;
+  box-shadow: inset 0 3px 5px rgba(0,0,0,0.1);
+}
+
+/* Swap button */
+.swap-btn{
+  background:#ffbe0b;
+  border:none;
+  border-radius:12px;
+  color:#fff;
+  font-weight:bold;
+  padding:10px;
+  margin-bottom:15px;
+  width:100%;
+  cursor:pointer;
+  transition:.3s;
+}
+.swap-btn:hover{
+  transform:scale(1.05);
+  box-shadow:0 0 15px #fff3 inset;
+}
+
+/* Convert button */
+.convert{
+  background:#00c853;
+  border:none;
+  border-radius:15px;
+  color:#fff;
+  font-weight:bold;
+  padding:15px;
+  width:100%;
+  font-size:18px;
+  cursor:pointer;
+  transition:.3s;
+}
+.convert:hover{
+  transform:scale(1.05);
+  box-shadow:0 0 15px #fff3 inset;
+}
+
+/* Display */
+.display{
+  background:#d9f0ff;
+  padding:15px;
+  border-radius:18px;
+  margin-bottom:12px;
+  font-size:24px;
+  text-align:center;
+  box-shadow: inset 0 5px 8px rgba(0,0,0,0.1);
+}
+
+/* Media */
+@media(max-width:480px){
+  .converter{width:90%;}
+}
+</style>
+</head>
+<body>
+
+<div class="converter">
+  <div class="title">UNIVERSAL UNIT CONVERTER</div>
+
+  <select id="category">
+    <option value="length">Length</option>
+    <option value="mass">Mass</option>
+    <option value="time">Time</option>
+    <option value="temperature">Temperature</option>
+    <option value="area">Area</option>
+    <option value="volume">Volume</option>
+    <option value="speed">Speed</option>
+    <option value="force">Force</option>
+    <option value="pressure">Pressure</option>
+    <option value="energy">Energy</option>
+  </select>
+
+  <input type="number" id="input-value" placeholder="Enter value" value="1">
+  <select id="unit-from"></select>
+
+  <button class="swap-btn" id="swap">SWAP UNITS</button>
+
+  <div class="display" id="output">0</div>
+  <select id="unit-to"></select>
+
+  <button class="convert" id="convert">CONVERT</button>
+</div>
+
+<script>
+// ===== Units Definition =====
+const units = {
+  length:{m:1, km:1000, cm:0.01, mm:0.001, ft:0.3048, in:0.0254, mi:1609.34},
+  mass:{kg:1, g:0.001, mg:0.000001, lb:0.453592, oz:0.0283495},
+  time:{s:1, min:60, h:3600, day:86400},
+  temperature:{C:'C', F:'F', K:'K'},
+  area:{m2:1, km2:1e6, cm2:0.0001, ft2:0.092903, in2:0.00064516, acre:4046.86},
+  volume:{m3:1, l:0.001, ml:0.000001, ft3:0.0283168, in3:1.6387e-5},
+  speed:{mps:1, kmph:0.277778, mph:0.44704},
+  force:{N:1, kN:1000, lbf:4.44822},
+  pressure:{Pa:1, kPa:1000, bar:1e5, psi:6894.76},
+  energy:{J:1, kJ:1000, cal:4.184, kcal:4184}
+};
+
+// ===== Elements =====
+const category = document.getElementById('category');
+const unitFrom = document.getElementById('unit-from');
+const unitTo = document.getElementById('unit-to');
+const inputValue = document.getElementById('input-value');
+const output = document.getElementById('output');
+const swapBtn = document.getElementById('swap');
+const convertBtn = document.getElementById('convert');
+
+// Populate units dropdown
+function populateUnits(){
+  unitFrom.innerHTML = '';
+  unitTo.innerHTML = '';
+  const cat = category.value;
+  for(let u in units[cat]){
+    unitFrom.innerHTML += `<option value="${u}">${u}</option>`;
+    unitTo.innerHTML += `<option value="${u}">${u}</option>`;
+  }
+}
+category.addEventListener('change', populateUnits);
+populateUnits();
+
+// Conversion function
+function convert(){
+  const cat = category.value;
+  let val = parseFloat(inputValue.value);
+  let from = unitFrom.value;
+  let to = unitTo.value;
+
+  if(cat==='temperature'){
+    // Temp conversion
+    if(from==='C'){
+      if(to==='F') val = val*9/5 +32;
+      else if(to==='K') val +=273.15;
+    } else if(from==='F'){
+      if(to==='C') val = (val-32)*5/9;
+      else if(to==='K') val = (val-32)*5/9 +273.15;
+    } else if(from==='K'){
+      if(to==='C') val -=273.15;
+      else if(to==='F') val = (val-273.15)*9/5 +32;
+    }
+  } else {
+    // General unit conversion
+    val = val * units[cat][from] / units[cat][to];
+  }
+  output.innerText = val.toFixed(5);
+}
+
+// Swap function
+swapBtn.addEventListener('click', ()=>{
+  const temp = unitFrom.value;
+  unitFrom.value = unitTo.value;
+  unitTo.value = temp;
+  convert();
+});
+
+// Event listeners
+convertBtn.addEventListener('click', convert);
+inputValue.addEventListener('input', convert);
+unitFrom.addEventListener('change', convert);
+unitTo.addEventListener('change', convert);
+
+convert(); // initial
+</script>
+
+</body>
+</html>

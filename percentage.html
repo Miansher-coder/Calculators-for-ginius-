@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Percentage Calculator</title>
+
+<style>
+
+body{
+font-family:Poppins,Arial;
+background:black;
+color:white;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+}
+
+/* calculator box */
+
+.box{
+width:360px;
+padding:30px;
+background:#050520;
+border-radius:12px;
+text-align:center;
+box-shadow:0 0 25px cyan;
+}
+
+h2{
+margin-bottom:20px;
+text-shadow:0 0 10px cyan;
+}
+
+/* option buttons */
+
+.options{
+margin-bottom:15px;
+}
+
+.options button{
+
+padding:8px 14px;
+margin:5px;
+
+border:none;
+border-radius:6px;
+
+background:#222;
+color:white;
+
+cursor:pointer;
+font-size:14px;
+
+}
+
+.options button.active{
+background:cyan;
+color:black;
+}
+
+/* inputs */
+
+input{
+width:90%;
+padding:10px;
+margin:8px;
+border:none;
+border-radius:6px;
+}
+
+/* calculate button */
+
+.calcBtn{
+
+padding:10px 20px;
+margin-top:10px;
+
+border:none;
+border-radius:6px;
+
+background:cyan;
+color:black;
+font-weight:bold;
+
+cursor:pointer;
+
+}
+
+/* result */
+
+.result{
+margin-top:15px;
+font-size:18px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="box">
+
+<h2>Percentage Calculator</h2>
+
+<div class="options">
+<button id="btn1" class="active" onclick="setMode('of')">% of Number</button>
+<button id="btn2" onclick="setMode('between')">Between Numbers</button>
+</div>
+
+<input type="number" id="num1" placeholder="First Number">
+<input type="number" id="num2" placeholder="Second Number">
+
+<button class="calcBtn" onclick="calculate()">Calculate</button>
+
+<div class="result" id="result"></div>
+
+</div>
+
+<script>
+
+let mode="of";
+
+function setMode(m){
+
+mode=m;
+
+document.getElementById("btn1").classList.remove("active");
+document.getElementById("btn2").classList.remove("active");
+
+if(m==="of"){
+document.getElementById("btn1").classList.add("active");
+}
+
+else{
+document.getElementById("btn2").classList.add("active");
+}
+
+}
+
+function calculate(){
+
+let a=parseFloat(document.getElementById("num1").value);
+let b=parseFloat(document.getElementById("num2").value);
+
+let result;
+
+if(mode==="of"){
+
+result=(a*b)/100;
+
+document.getElementById("result").innerHTML=
+a+"% of "+b+" = "+result;
+
+}
+
+else{
+
+result=(a/b)*100;
+
+document.getElementById("result").innerHTML=
+a+" is "+result.toFixed(2)+"% of "+b;
+
+}
+
+}
+
+</script>
+
+</body>
+</html>

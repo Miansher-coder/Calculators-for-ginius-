@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Hours Between Two Times</title>
+
+<style>
+body{
+font-family:Arial;
+background:#0f2027;
+color:white;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+}
+
+.box{
+background:#1c2b38;
+padding:30px;
+border-radius:10px;
+text-align:center;
+box-shadow:0 0 20px cyan;
+}
+
+input{
+padding:8px;
+margin:10px;
+font-size:16px;
+}
+
+button{
+padding:10px 20px;
+background:cyan;
+border:none;
+font-size:16px;
+cursor:pointer;
+}
+
+#result{
+margin-top:15px;
+font-size:20px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="box">
+<h2>Hour Calculator</h2>
+
+<label>From:</label>
+<input type="time" id="start"><br>
+
+<label>To:</label>
+<input type="time" id="end"><br>
+
+<button onclick="calc()">Calculate</button>
+
+<div id="result"></div>
+</div>
+
+<script>
+function calc(){
+
+let start=document.getElementById("start").value;
+let end=document.getElementById("end").value;
+
+if(!start || !end){
+document.getElementById("result").innerHTML="Enter both times";
+return;
+}
+
+let s=start.split(":");
+let e=end.split(":");
+
+let startMin = parseInt(s[0])*60 + parseInt(s[1]);
+let endMin = parseInt(e[0])*60 + parseInt(e[1]);
+
+let diff=endMin-startMin;
+
+let hours=Math.floor(diff/60);
+let minutes=diff%60;
+
+document.getElementById("result").innerHTML=
+"Total: "+hours+" Hours "+minutes+" Minutes";
+}
+</script>
+
+</body>
+</html>

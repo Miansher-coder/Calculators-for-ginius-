@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kinetic Energy Calculator | Physics</title>
+<style>
+    body {
+        margin:0;
+        font-family: 'Comic Sans MS', cursive;
+        background: linear-gradient(to right, #43e97b, #38f9d7);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    .calculator {
+        background: #fff;
+        padding: 30px 40px;
+        border-radius: 20px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        text-align: center;
+        width: 350px;
+    }
+
+    .calculator h1 {
+        margin-bottom: 20px;
+        color: #28a745;
+    }
+
+    input, button {
+        width: 80%;
+        padding: 10px;
+        margin: 10px 0;
+        border-radius: 10px;
+        border: 1px solid #ccc;
+        font-size: 16px;
+    }
+
+    button {
+        background: #28a745;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    button:hover {
+        background: #20c997;
+    }
+
+    .result {
+        margin-top: 20px;
+        font-size: 20px;
+        font-weight: bold;
+        color: #28a745;
+    }
+</style>
+</head>
+<body>
+
+<div class="calculator">
+    <h1>Kinetic Energy Calculator</h1>
+    <input type="number" id="mass" placeholder="Mass (kg)">
+    <input type="number" id="velocity" placeholder="Velocity (m/s)">
+    <button onclick="calculateKE()">Calculate KE</button>
+    <div class="result" id="result"></div>
+</div>
+
+<script>
+    function calculateKE() {
+        let mass = parseFloat(document.getElementById('mass').value);
+        let velocity = parseFloat(document.getElementById('velocity').value);
+
+        if (isNaN(mass) || isNaN(velocity)) {
+            document.getElementById('result').innerHTML = "Please enter both Mass and Velocity!";
+            return;
+        }
+
+        let KE = 0.5 * mass * velocity * velocity;
+
+        document.getElementById('result').innerHTML = `Kinetic Energy: ${KE.toFixed(2)} Joules`;
+    }
+</script>
+
+</body>
+</html>

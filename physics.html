@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Physics Calculators | Majic of Science</title>
+
+<style>
+
+/* ===== BODY ===== */
+
+body{
+margin:0;
+font-family:Poppins, sans-serif;
+background:black;
+color:white;
+overflow-x:hidden;
+}
+
+/* ===== ANIMATED STAR BACKGROUND ===== */
+
+body::before{
+content:"";
+position:fixed;
+width:200%;
+height:200%;
+background:
+radial-gradient(white 1px, transparent 1px),
+radial-gradient(cyan 1px, transparent 1px),
+radial-gradient(purple 1px, transparent 1px);
+background-size:80px 80px,140px 140px,200px 200px;
+animation:stars 60s linear infinite;
+z-index:-1;
+}
+
+@keyframes stars{
+from{transform:translateY(0);}
+to{transform:translateY(-2000px);}
+}
+
+/* ===== NAVBAR ===== */
+
+.navbar{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:15px 60px;
+background: radial-gradient(circle,#0a0f2c,#030e64,#026785);
+position:sticky;
+top:0;
+z-index:1000;
+}
+
+.logo img{
+width:120px;
+}
+
+.nav-links{
+display:flex;
+gap:30px;
+list-style:none;
+}
+
+.nav-links a{
+text-decoration:none;
+color:white;
+font-weight:500;
+padding:8px 18px;
+border-radius:20px;
+transition:.3s;
+}
+
+.nav-links a:hover{
+background:#0c7946;
+}
+
+/* active button */
+
+.active{
+background:linear-gradient(45deg,red,orange,yellow,green,cyan,blue,violet);
+padding:3px;
+border-radius:30px;
+}
+
+.active a{
+background:#0a0f2c;
+border-radius:30px;
+}
+
+/* ===== TITLE ===== */
+
+.main-title{
+text-align:center;
+margin-top:40px;
+font-size:36px;
+text-shadow:0 0 15px cyan;
+}
+
+.slider{
+width:90%;
+max-width:1000px;
+height:350px;
+margin:30px auto;
+overflow:hidden;
+border-radius:12px;
+border:2px dashed #8bc34a;
+}
+
+.slides{
+display:flex;
+width:400%;
+animation:slide 12s infinite;
+}
+
+.slides img{
+width:100%;
+height:350px;
+object-fit:cover;
+}
+
+@keyframes slide{
+0%,20%{transform:translateX(0);}
+25%,45%{transform:translateX(-100%);}
+50%,70%{transform:translateX(-200%);}
+75%,95%{transform:translateX(-300%);}
+100%{transform:translateX(0);}
+}
+
+
+/* ===== CALCULATOR GRID ===== */
+
+.container{
+width:90%;
+margin:auto;
+margin-top:50px;
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:30px;
+}
+
+/* ===== CALCULATOR BOX ===== */
+
+.calc{
+background:#070720;
+height:180px;
+border-radius:12px;
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+cursor:pointer;
+transition:0.4s;
+position:relative;
+text-decoration:none;
+color:white;
+}
+
+/* neon animated border */
+
+.calc::before{
+content:"";
+position:absolute;
+inset:-3px;
+border-radius:14px;
+background:linear-gradient(45deg, cyan, blue, purple, magenta, cyan);
+background-size:400%;
+animation:borderMove 6s linear infinite;
+z-index:-1;
+}
+
+@keyframes borderMove{
+0%{background-position:0%;}
+100%{background-position:400%;}
+}
+
+/* image */
+
+.calc img{
+width:70px;
+margin-bottom:12px;
+}
+
+/* text */
+
+.calc span{
+font-size:16px;
+text-align:center;
+text-shadow:0 0 5px cyan,0 0 10px cyan,0 0 20px blue;
+}
+
+/* hover effect */
+
+.calc:hover{
+transform:translateY(-8px) scale(1.08);
+box-shadow:0 0 20px cyan,0 0 40px blue;
+}
+
+/* ===== MOBILE ===== */
+
+@media(max-width:768px){
+
+.navbar{
+flex-direction:column;
+gap:10px;
+}
+
+.slider{
+height:220px;
+}
+
+.slides img{
+height:220px;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+
+<nav class="navbar">
+
+<div class="logo">
+<img src="clogo.png">
+</div>
+
+<ul class="nav-links">
+
+<li><a href="homecal.html">Home</a></li>
+<li><a href="math.html">Math</a></li>
+<li class="active"><a href="physics.html">Physics</a></li>
+
+<li><a href="other.html">Other</a></li>
+
+</ul>
+
+</nav>
+
+<!-- TITLE -->
+
+<h1 class="main-title">⚛️ Physics Calculators</h1>
+
+<!-- SLIDER -->
+
+<div class="slider">
+
+<div class="slides">
+
+<img src="ba1.png">
+<img src="ba2.png">
+<img src="ba3.png">
+<img src="ba4.png">
+
+</div>
+
+</div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mathematics Calculators | Majic of Science</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+
+<style>
+
+/* ===== GLOBAL ===== */
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+background:black;
+color:white;
+overflow-x:hidden;
+}
+
+/* ===== ANIMATED SPACE BACKGROUND ===== */
+
+body::before{
+content:"";
+position:fixed;
+width:200%;
+height:200%;
+
+background:
+radial-gradient(white 1px, transparent 1px),
+radial-gradient(cyan 1px, transparent 1px),
+radial-gradient(purple 1px, transparent 1px);
+
+background-size:80px 80px,140px 140px,200px 200px;
+
+animation:stars 60s linear infinite;
+
+z-index:-1;
+}
+
+@keyframes stars{
+from{transform:translateY(0);}
+to{transform:translateY(-2000px);}
+}
+
+/* ===== NAVBAR ===== */
+
+.navbar{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:15px 60px;
+
+background:linear-gradient(90deg,#0a0f2c,#02044d,#004f6b);
+position:sticky;
+top:0;
+z-index:1000;
+}
+
+.logo img{
+width:120px;
+}
+
+.nav-links{
+list-style:none;
+display:flex;
+gap:35px;
+}
+
+.nav-links li a{
+text-decoration:none;
+color:white;
+font-weight:500;
+transition:.3s;
+padding:8px 18px;
+border-radius:20px;
+}
+
+.nav-links li a:hover{
+background:#00c3ff;
+color:black;
+}
+
+/* active button */
+
+.active a{
+background:linear-gradient(45deg,cyan,blue,purple);
+box-shadow:0 0 15px cyan;
+}
+
+/* ===== PAGE TITLE ===== */
+
+.main-title{
+text-align:center;
+margin:40px 0;
+font-size:34px;
+text-shadow:0 0 20px cyan;
+}
+
+/* ===== SLIDER ===== */
+
+.slider{
+width:1000px;
+max-width:90%;
+height:350px;
+margin:auto;
+overflow:hidden;
+border-radius:12px;
+border:2px solid cyan;
+box-shadow:0 0 25px cyan;
+}
+
+.slides{
+display:flex;
+width:1000px;
+animation:slide 16s infinite;
+}
+
+.slides img{
+width:100%;
+height:350px;
+object-fit:cover;
+}
+
+
+@keyframes slide{
+  0%,20%{transform:translateX(0);}
+  25%,40%{transform:translateX(-1000px);}
+  50%,60%{transform:translateX(-2000px);}
+  75%,80%{transform:translateX(-3000px);}
+  100%{transform:translateX(0);}
+}
+
+/* ===== SECTION TITLE ===== */
+
+h1{
+text-align:center;
+margin-top:50px;
+font-size:36px;
+text-shadow:0 0 20px cyan;
+}
+
+/* ===== GRID ===== */
+
+.container{
+
+width:90%;
+margin:auto;
+margin-top:50px;
+
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+
+gap:30px;
+
+}
+
+/* ===== CALCULATOR BOX ===== */
+
+.calc{
+
+background:#050520;
+height:180px;
+
+border-radius:14px;
+
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+
+cursor:pointer;
+transition:.4s;
+
+position:relative;
+
+}
+
+/* neon animated border */
+
+.calc::before{
+
+content:"";
+position:absolute;
+
+inset:-3px;
+
+border-radius:16px;
+
+background:linear-gradient(
+45deg,
+cyan,
+blue,
+purple,
+magenta,
+cyan
+);
+
+background-size:400%;
+
+animation:borderMove 6s linear infinite;
+
+z-index:-1;
+
+}
+
+@keyframes borderMove{
+
+0%{background-position:0%;}
+100%{background-position:400%;}
+
+}
+
+/* icon */
+
+.calc img{
+
+width:70px;
+margin-bottom:10px;
+transition:.4s;
+
+}
+
+/* text */
+
+.calc span{
+
+font-size:16px;
+
+text-shadow:
+0 0 5px cyan,
+0 0 10px cyan;
+
+}
+
+/* hover effect */
+
+.calc:hover{
+
+transform:translateY(-10px) scale(1.08);
+
+box-shadow:
+0 0 20px cyan,
+0 0 40px blue;
+
+}
+
+.calc:hover img{
+transform:scale(1.15);
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+
+<nav class="navbar">
+
+<div class="logo">
+<img src="clogo.png">
+</div>
+
+<ul class="nav-links">
+
+<li><a href="homecal.html">Home</a></li>
+<li ><a href="math.html">Math</a></li>
+<li class="active"><a href="physics.html">Physics</a></li>
+
+<li><a href="other.html">Other</a></li>
+
+</ul>
+
+</nav>
+
+<h1 class="main-title">🚀 Calculators for Genius</h1>
+
+<!-- SLIDER -->
+
+<div class="slider">
+<div class="slides">
+
+<img src="ba1.png">
+<img src="ba2.png">
+<img src="ba3.png">
+<img src="ba4.png">
+
+</div>
+</div>
+
+<h1>Physics Calculators</h1>
+<div class="container">
+
+<!-- CALCULATORS -->
+
+<div class="container">
+
+<a href="mass.html" class="calc">
+<img src="mass.png">
+<span>Mass Calculator</span>
+</a>
+
+<a href="speed.html" class="calc">
+<img src="speed.png">
+<span>Speed Calculator</span>
+</a>
+
+<a href="force.html" class="calc">
+<img src="force.png">
+<span>Force Calculator</span>
+</a>
+
+<a href="acceleration.html" class="calc">
+<img src="acceleration.png">
+<span>Acceleration Calculator</span>
+</a>
+<a href="kinetic.html" class="calc">
+<img src="ke.png" alt="Kinetic Energy Calculator">
+<span>Kinetic Energy Calculator</span>
+</a>
+<a href="distace.html" class="calc">
+<img src="distance.png">
+<span>Distance Calculator</span>
+</a>
+<a href="potential.html"class="calc">
+  <img src="pe.png" alt="Potential Energy Calculator">
+  <span>Potential Energy Calculator</span>
+</a>
+<a href="power.html" class="calc">
+<img src="power.png">
+<span>Power Calculator</span>
+</a>
+
+
+<a href="momentum.html" class="calc">
+<img src="momentum.png">
+<span>Momentum Calculator</span>
+</a>
+
+<a href="work.html" class="calc">
+<img src="wor.png">
+<span>Work Calculator</span>
+</a>
+
+</body>
+</html>

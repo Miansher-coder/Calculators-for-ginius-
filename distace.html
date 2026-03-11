@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Distance Calculator | Majic of Science</title>
+
+<style>
+body{
+  font-family:Poppins,Arial;
+  background:black;
+  color:white;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  min-height:100vh;
+}
+
+/* calculator box */
+.box{
+  width:400px;
+  padding:30px;
+  background:#050520;
+  border-radius:15px;
+  text-align:center;
+  box-shadow:0 0 25px cyan,0 0 40px blue;
+}
+
+/* title */
+h2{
+  margin-bottom:20px;
+  text-shadow:0 0 10px cyan;
+}
+
+/* formula */
+.formula{
+  font-size:18px;
+  margin-bottom:20px;
+  color:cyan;
+}
+
+/* inputs */
+input{
+  width:90%;
+  padding:10px;
+  margin:10px 0;
+  border:none;
+  border-radius:8px;
+  text-align:center;
+}
+
+/* buttons */
+button{
+  padding:10px 20px;
+  margin:10px 5px;
+  border:none;
+  border-radius:8px;
+  background:cyan;
+  color:black;
+  font-weight:bold;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+button:hover{
+  box-shadow:0 0 20px cyan;
+}
+
+/* result */
+.result{
+  margin-top:15px;
+  font-size:18px;
+  color:#00ffff;
+}
+
+/* secondary buttons */
+.secondary{
+  background:purple;
+  color:white;
+}
+.secondary:hover{
+  box-shadow:0 0 20px magenta;
+}
+</style>
+</head>
+<body>
+
+<div class="box">
+<h2>Distance Calculator</h2>
+
+<div class="formula">Formula: Distance = Speed × Time</div>
+
+<input type="number" id="speed" placeholder="Speed (m/s or km/h)">
+<input type="number" id="time" placeholder="Time (seconds or hours)">
+
+<br>
+<button onclick="calculateDistance()">Calculate Distance</button>
+
+<div class="result" id="result"></div>
+
+<hr style="border:1px dashed cyan; margin:15px 0;">
+
+<!-- Buttons to open other calculators -->
+<button class="secondary" onclick="location.href='speed.html'">Go to Speed</button>
+<button class="secondary" onclick="location.href='time.html'">Go to Time</button>
+
+</div>
+
+<script>
+function calculateDistance(){
+  let v = parseFloat(document.getElementById("speed").value);
+  let t = parseFloat(document.getElementById("time").value);
+
+  if(isNaN(v) || isNaN(t)){
+    document.getElementById("result").innerHTML="Please enter valid numbers";
+    return;
+  }
+
+  let d = v * t;
+
+  document.getElementById("result").innerHTML = "Distance = " + d.toFixed(2);
+}
+</script>
+
+</body>
+</html>
